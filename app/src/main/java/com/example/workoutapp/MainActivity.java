@@ -10,8 +10,15 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+
+    RecyclerView mRecyclerView;
+    MyAdapter myAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +28,12 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(navListener);
 
+        mRecyclerView = findViewById(R.id.recyclerView);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this)); //Create recycler view in linearlayout
+
+        myAdapter = new MyAdapter(this, getMyList());
+
+        mRecyclerView.setAdapter(myAdapter);
         //boolean firstTimeUser = true;
 
         // Passing each menu ID as a set of Ids because each
@@ -33,6 +46,23 @@ public class MainActivity extends AppCompatActivity {
 //        NavigationUI.setupWithNavController(navView, navController);
     }
 
+    private ArrayList<WorkoutModel> getMyList(){
+        ArrayList<WorkoutModel> models = new ArrayList<>();
+
+        WorkoutModel m = new WorkoutModel();
+        m.setTitle("Squat");
+        m.setDescription("Ass to grass");
+        m.setImg(R.drawable.benchpress);                    //Add images in drawable folder
+        m.setTitle("Bench Press");
+        m.setDescription("A chest to impress");
+        m.setImg(R.drawable.benchpress);                    //Add images in drawable folder
+
+        m.setTitle("Bicep Curls");
+        m.setDescription("Curls for the girls");
+        m.setImg(R.drawable.benchpress);                    //Add images in drawable folder
+
+        return models;
+    }
     private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
